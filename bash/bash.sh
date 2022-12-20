@@ -11,4 +11,5 @@ cd cmake-3.12.3
 make -j$(nproc)
 make install
 cmake --version
+npm i -g npm@6
 npm install
