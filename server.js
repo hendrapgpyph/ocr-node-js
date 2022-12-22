@@ -17,7 +17,9 @@ var Storage = multer.diskStorage({
         callback(null, "images/")
     },
     filename : (req, file, callback) => {
-        callback(null, file.originalname)
+        var extension = file.originalname.split('.').pop();
+        var filename = (new Date()).getTime()+"."+extension;
+        callback(null, filename)
     }
 });
 
@@ -165,6 +167,14 @@ app.post('/upload', (req, res) => {
                     }
                 }
             });
+
+            try {
+                fs.unlinkSync('images/'+filename);
+                fs.unlinkSync('images/convert_'+filename);
+            } catch (error) {
+                console.log(error);
+            }
+
             return res.json({
                 convert : result,
                 text : text
